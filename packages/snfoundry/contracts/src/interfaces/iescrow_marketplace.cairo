@@ -9,14 +9,15 @@ pub trait IEscrowMarketPlace<TContractState> {
         name: felt252,
         category: felt252,
         description: felt252,
+        image_url: ByteArray,
         price: u256,
         stock: u256,
     );
-    fn add_products_to_group(ref self: TContractState, group_id: u256);
+    fn add_products_to_group(ref self: TContractState, group_id: u256, number_of_products: u256);
     // fn remove_product(ref self: TContractState);
     fn remove_product_group(ref self: TContractState, group_id: u256);
     fn buy_product(ref self: TContractState, group_id: u256, number_to_purchase: u256);
-    fn confirm_shipped(ref self: TContractState, shipment_id: u256);
+    fn confirm_shipped(ref self: TContractState, shipment_id: u256, expected_shipment_time: u64);
     fn confirm_received(ref self: TContractState, shipment_id: u256);
     fn claim_funds(ref self: TContractState, shipment_id: u256);
     fn create_dispute(ref self: TContractState, shipment_id: u256);

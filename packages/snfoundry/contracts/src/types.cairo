@@ -9,14 +9,13 @@ use starknet::ContractAddress;
 #[derive(Copy, Drop, Serde, starknet::Store)]
 pub enum ProductStatus {
     #[default]
-    LISTED,
-    PAID_FOR,
-    SHIPPED,
-    RECEIVED,
-    CANCELLED,
+    AVAILABLE,
+    NOT_AVAILABLE
 }
 
-#[derive(Copy, Drop, Serde, starknet::Store)]
+// TODO -> Create an Impl on this struct to change the stock quantity when buying or adding to group
+
+#[derive(Clone, Drop, Serde, starknet::Store)]
 pub struct Product {
     // pub product: Product,
     pub stock: u256,
@@ -24,6 +23,7 @@ pub struct Product {
     pub name: felt252,
     pub category: felt252,
     pub description: felt252,
+    pub image_url: ByteArray,
     pub seller: ContractAddress,
     pub status: ProductStatus,
     pub price: u256,
@@ -35,6 +35,7 @@ pub struct Shipment {
     pub number_of_products: u256,
     pub product_group_id: u256,
     pub sender: ContractAddress,
+    pub amount: u256,
     pub recipient: ContractAddress,
     pub shipment_time: u64,
     pub expected_arrival: u64,
@@ -47,6 +48,7 @@ pub enum ShipmentStatus {
     NONE,
     SHIPPED,
     RECEIVED,
+    CANCELLED
 }
 
 #[derive(Copy, Drop, Serde, starknet::Store)]
