@@ -1,3 +1,4 @@
+use core::num::traits::Zero;
 use starknet::ContractAddress;
 
 // #[derive(Copy, Drop, Serde, starknet::Store)]
@@ -6,16 +7,16 @@ use starknet::ContractAddress;
 //     pub group_id: u256
 // }
 
-#[derive(Copy, Drop, Serde, starknet::Store)]
+#[derive(Copy, Drop, Serde, PartialEq, starknet::Store)]
 pub enum ProductStatus {
     #[default]
     AVAILABLE,
-    NOT_AVAILABLE
+    NOT_AVAILABLE,
 }
 
 // TODO -> Create an Impl on this struct to change the stock quantity when buying or adding to group
 
-#[derive(Clone, Drop, Serde, starknet::Store)]
+#[derive(Clone, Drop, Serde, PartialEq, starknet::Store)]
 pub struct Product {
     // pub product: Product,
     pub stock: u256,
@@ -27,6 +28,23 @@ pub struct Product {
     pub seller: ContractAddress,
     pub status: ProductStatus,
     pub price: u256,
+}
+
+#[generate_trait]
+pub impl ProductImpl of ProductTrait {
+    fn default() -> Product {
+        Product {
+            stock: 0,
+            group_id: 0,
+            name: 0,
+            category: 0,
+            description: 0,
+            image_url: "",
+            seller: Zero::zero(),
+            status: ProductStatus::AVAILABLE,
+            price: 0,
+        }
+    }
 }
 
 #[derive(Copy, Drop, Serde, starknet::Store)]
@@ -42,13 +60,30 @@ pub struct Shipment {
     pub shipment_status: ShipmentStatus,
 }
 
+#[generate_trait]
+pub impl ShipmentImpl of ShipmentTrait {
+    fn default() -> Shipment {
+        Shipment {
+            shipment_id: 0,
+            number_of_products: 0,
+            product_group_id: 0,
+            sender: Zero::zero(),
+            amount: 0,
+            recipient: Zero::zero(),
+            shipment_time: 0,
+            expected_arrival: 0,
+            shipment_status: ShipmentStatus::NONE,
+        }
+    }
+}
+
 #[derive(Copy, Drop, Serde, starknet::Store)]
 pub enum ShipmentStatus {
     #[default]
     NONE,
     SHIPPED,
     RECEIVED,
-    CANCELLED
+    CANCELLED,
 }
 
 #[derive(Copy, Drop, Serde, starknet::Store)]

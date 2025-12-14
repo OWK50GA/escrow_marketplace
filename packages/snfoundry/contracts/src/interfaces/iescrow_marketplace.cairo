@@ -1,3 +1,4 @@
+use starknet::ContractAddress;
 use crate::types::{Product, Shipment};
 
 #[starknet::interface]
@@ -28,5 +29,5 @@ pub trait IEscrowMarketPlace<TContractState> {
     fn get_product(self: @TContractState, group_id: u256) -> Product;
     fn get_shipment(self: @TContractState, shipment_id: u256) -> Shipment;
     // fn view_shipping_status(self: @TContractState) -> ShipmentStatus;
-    fn get_seller_products(self: @TContractState) -> Array<Product>;
+    fn get_seller_products(self: @TContractState, seller: ContractAddress) -> Array<Product>;
 }

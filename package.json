@@ -30,10 +30,11 @@
     "verify": "yarn workspace @ss-2/snfoundry verify"
   },
   "dependencies": {
-    "postcss": "^8.4.38"
+    "postcss": "^8.4.38",
+    "react-daisyui": "^5.0.5"
   },
   "devDependencies": {
-    "daisyui": "^4.7.3",
+    "daisyui": "^5.5.13",
     "husky": "^9.0.11",
     "pinst": "^3.0.0",
     "prettier": "^3.2.5"

@@ -46,9 +46,11 @@ import { green, red } from "./helpers/colorize-log";
  */
 const deployScript = async (): Promise<void> => {
   await deployContract({
-    contract: "YourContract",
+    contract: "EscrowMarketplace",
     constructorArgs: {
+      max_time_to_dispute: "604800",
       owner: deployer.address,
+      accepted_token: "0x0512feAc6339Ff7889822cb5aA2a86C848e9D392bB0E3E237C008674feeD8343"
     },
   });
 };
